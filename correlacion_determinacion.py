@@ -20,7 +20,7 @@ determinations = {}
 
 for col in dataset.columns:
     determinations[col] = get_determination(col)
-    correlations[col] = get_correlation(col)
+    correlations[col] = determinations[col]**0.5
 
 for col, value in sorted(determinations.items(), key=lambda el: el[1], reverse=True):
     print(f"{col}: {value}")

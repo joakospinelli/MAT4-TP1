@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import funciones_reg_simple as func
-import numpy as np
 
 dataset = pd.read_csv("players_21.csv")
 
@@ -21,7 +20,7 @@ b0 = func.get_mean(y) - (b1 * func.get_mean(x))
 print(f"La recta de regresión tiene los parámetros beta_0={b0} y beta_1={b1}")
 
 # Gráfico de recta de ajuste
-x_line = [i for i in range(0, 300000)]
+x_line = [i for i in range(0, 600000)]
 y_line = [b0 + b1*x for x in x_line]
 
 plt.plot(x_line, y_line, label="Recta de ajuste", c="red")
