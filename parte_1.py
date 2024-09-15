@@ -57,6 +57,27 @@ CI_upper = b1 + t_value * se_b1
 
 print(f"Intervalo de confianza del 95% para la pendiente: [{CI_lower}, {CI_upper}]")
 
+# iii) Proporción de veces que el valor de mercado supera la incertidumbre de predicción
+# Intervalo de predicción para cada valor que se predijo
+CI_lower_pred = Y_pred - t_value * s_e
+CI_upper_pred = Y_pred + t_value * s_e
+
+
+# Proporción de veces que el valor de mercado real cae fuera del intervalo de predicción
+exceeds = np.sum((y < CI_lower_pred) | (y > CI_upper_pred))
+proportion_exceeds = exceeds / n
+print(f"Proporción de veces que el valor de mercado supera la incertidumbre: {proportion_exceeds}")
+
+
+# Proporción de veces que el valor de mercado supera la incertidumbre de la respuesta media
+mean_Y_pred = np.mean(Y_pred)
+CI_lower_mean = mean_Y_pred - t_value * s_e
+CI_upper_mean = mean_Y_pred + t_value * s_e
+
+exceeds_mean = np.sum((y < CI_lower_mean) | (y > CI_upper_mean))
+proportion_exceeds_mean = exceeds_mean / n
+print(f"Proporción de veces que el valor de mercado supera la incertidumbre de la respuesta media: {proportion_exceeds_mean}")
+
 
 
 plt.show()
