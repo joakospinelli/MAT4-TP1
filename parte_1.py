@@ -49,6 +49,13 @@ p_value = 2 * (1 - stats.t.cdf(abs(t_stat), df=n-2))
 print(f"Estadístico t: {t_stat}")
 print(f"Valor p: {p_value}")
 
+#ii) Inferencias sobre los parámetros de la recta (intervalo de confianza del 95%)
+
+t_value = stats.t.ppf(0.975, df=n-2)  # Valor t para 95% de confianza
+CI_lower = b1 - t_value * se_b1
+CI_upper = b1 + t_value * se_b1
+
+print(f"Intervalo de confianza del 95% para la pendiente: [{CI_lower}, {CI_upper}]")
 
 
 
