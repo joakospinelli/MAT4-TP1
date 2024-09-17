@@ -38,9 +38,8 @@ b0_aux = (variance * ( 1/n + (func.get_mean(x)**2 / func.get_s_xx(x)) ) )**0.5
 
 t_statistic_b0 = b0 / b0_aux
 
-
 ic_b0_lower = b0 - t_value_ic * b0_aux
-ic_b0_upper = b0 - t_value_ic * b0_aux
+ic_b0_upper = b0 + t_value_ic * b0_aux
 
 print(f"Intervalo de confianza del 95% para Beta_0: [{ic_b0_lower} ; {ic_b0_upper}]")
 
