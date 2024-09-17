@@ -30,35 +30,39 @@ plt.plot(x_line, y_line, label="Recta de ajuste", c="red")
 # Cálculo de varianza
 variance = func.get_sce(x,y) / len(y) - 2
 
-#i) prueba de significancia
-# Predicciones y residuos
+# Cálculo del intervalo de confianza para beta_0
+
+t_value_ic = stats.t.ppf(0.95, n-2)
+
+b0_aux = (variance * ( 1/n + (func.get_mean(x)**2 / func.get_s_xx(x)) ) )**0.5
+
+t_statistic_b0 = b0 / b0_aux
+
+
+ic_b0_lower = b0 - t_value_ic * b0_aux
+ic_b0_upper = b0 - t_value_ic * b0_aux
+
+print(f"Intervalo de confianza del 95% para Beta_0: [{ic_b0_lower} ; {ic_b0_upper}]")
+
+# Cálculo de intervalo de confianza para beta_1
+
+b1_aux = (variance / func.get_s_xx(x))**0.5
+t_statistic_b1 = b1 / b1_aux
+
+ic_b1_lower = b1 - t_value_ic * b1_aux
+ic_b1_upper = b1 + t_value_ic * b1_aux
+
+print(f"Intervalo de confianza del 95% para Beta_1: [{ic_b1_lower} ; {ic_b1_upper}]")
+
+# iii) Proporción de veces que el valor de mercado supera la incertidumbre de predicción
+# Intervalo de predicción para cada valor que se predijo
 Y_pred = b0 + b1 * x
 residuals = y - Y_pred
 s_residuals = np.sum(residuals**2)
 
-# Error estándar de los residuos
 s_e = np.sqrt(s_residuals / (n - 2))
 
-# Error estándar de la pendiente
-se_b1 = s_e / np.sqrt(func.get_s_xx(x))
-
-# Estadístico t para la pendiente
-t_stat = b1 / se_b1
-p_value = 2 * (1 - stats.t.cdf(abs(t_stat), df=n-2))
-
-print(f"Estadístico t: {t_stat}")
-print(f"Valor p: {p_value}")
-
-#ii) Inferencias sobre los parámetros de la recta (intervalo de confianza del 95%)
-
 t_value = stats.t.ppf(0.975, df=n-2)  # Valor t para 95% de confianza
-CI_lower = b1 - t_value * se_b1
-CI_upper = b1 + t_value * se_b1
-
-print(f"Intervalo de confianza del 95% para la pendiente: [{CI_lower}, {CI_upper}]")
-
-# iii) Proporción de veces que el valor de mercado supera la incertidumbre de predicción
-# Intervalo de predicción para cada valor que se predijo
 CI_lower_pred = Y_pred - t_value * s_e
 CI_upper_pred = Y_pred + t_value * s_e
 
@@ -68,7 +72,6 @@ exceeds = np.sum((y < CI_lower_pred) | (y > CI_upper_pred))
 proportion_exceeds = exceeds / n
 print(f"Proporción de veces que el valor de mercado supera la incertidumbre: {proportion_exceeds}")
 
-
 # Proporción de veces que el valor de mercado supera la incertidumbre de la respuesta media
 mean_Y_pred = np.mean(Y_pred)
 CI_lower_mean = mean_Y_pred - t_value * s_e
@@ -77,7 +80,5 @@ CI_upper_mean = mean_Y_pred + t_value * s_e
 exceeds_mean = np.sum((y < CI_lower_mean) | (y > CI_upper_mean))
 proportion_exceeds_mean = exceeds_mean / n
 print(f"Proporción de veces que el valor de mercado supera la incertidumbre de la respuesta media: {proportion_exceeds_mean}")
-
-
 
 plt.show()
