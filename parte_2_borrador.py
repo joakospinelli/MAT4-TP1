@@ -84,5 +84,5 @@ summary, rsquared
 
 
 """
-descenso de gradiente supongo que lo haremos manual?
+descenso de gradiente supongo que lo haremos manual? --> lo hago en otro archivo
 """
