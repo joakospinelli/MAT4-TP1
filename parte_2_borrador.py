@@ -8,18 +8,9 @@ dataset = pd.read_csv("players_21.csv")
 
 dataset = dataset.dropna(axis=1, how="any").select_dtypes(include=["number"])
 
-"""
-AGREGAR BIEN COMO ESTOY COPIANDO LO DEL EJERCICIO 15 NO ME FIJO TODO
-"""
 
-x = dataset['wage_eur','overall','age'] # <--- ACTUALIZAR 
+x = dataset['wage_eur','overall','potential','international_reputation']
 y = dataset['value_eur']
-""" 
-n = len(x)
-plt.scatter(x, y)
-plt.xlabel("Sueldo del jugador")
-plt.ylabel("Valor de mercado del jugador")
-"""
 
 # Los resultados son (filas, columnas) (ojalá)
 print(f"dimension de X: {x.shape}")
@@ -31,22 +22,31 @@ print(f"dimension de X: {x.shape}")
 
 
 # Resuelvo productos punto e inversas.
-
-xtx = np.dot(x.t, x)
+""" 
+x -> matriz de las caracteristicas q elegimos
+x^t -> es la transpuesta de X
+x^t x -> es el producto de X por la transpuesta, hace una matriz cuadrada que representa el sistema de ecuaciones
+(x^t x)^1 -> inversa de la matriz
+x^t.y -> producto de la transpuesta de X por el vector de salidaa y
+"""
+xtx = np.dot(x.t, x) 
 print(xtx.shape)
 xtx_inv = np.linalg.inv(xtx)
 xty = np.dot(x.t, y)
 beta = np.dot(xtx_inv, xty)
 
-y_pred = np.dot(x, beta)
-
 print("Coeficientes:")
 print(f"B0 (Ordenada al origen): {beta[0]:.4f}")
-print(f"B1 (Algoritmos): {beta[1]:.4f}")
-print(f"B2 (Base de Datos): {beta[2]:.4f}")
-print(f"B3 (Programación): {beta[3]:.4f}")
+print(f"B1 (Sueldo en euros): {beta[1]:.4f}")
+print(f"B2 (Puntuación general): {beta[2]:.4f}")
+print(f"B3 (Potencial): {beta[3]:.4f}")
+print(f"B4 (Reputación internacional): {beta[4]:.4f}")
 
+y_pred = np.dot(x, beta)
 
+# me falta coeficiente de determinación y la correlación
+
+# -----------------------------
 print("\nPrimeras filas del DataFrame:")
 print(dataset.head(10)) #muestro las primeras 10 lineas
 
