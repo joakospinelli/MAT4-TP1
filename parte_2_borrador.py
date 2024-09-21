@@ -29,10 +29,10 @@ x^t x -> es el producto de X por la transpuesta, hace una matriz cuadrada que re
 (x^t x)^1 -> inversa de la matriz
 x^t.y -> producto de la transpuesta de X por el vector de salidaa y
 """
-xtx = np.dot(x.t, x) 
+xtx = np.dot(x.T, x) 
 print(xtx.shape)
 xtx_inv = np.linalg.inv(xtx)
-xty = np.dot(x.t, y)
+xty = np.dot(x.T, y)
 beta = np.dot(xtx_inv, xty)
 
 print("Coeficientes:")
@@ -57,32 +57,12 @@ print("\nPrimeras filas del DataFrame:")
 print(dataset.head(10)) #muestro las primeras 10 lineas
 
 """ ESTO NO ENTENDI Q HACE CREO Q GRAFICA :p"""
-plt.figure(figsize=(8, 6))
-plt.scatter(y, y_pred, color='blue', label='Predicción')
-plt.plot([min(y), max(y)], [min(y), max(y)], color='red', linestyle='--', label='Línea ideal')
+plt.scatter(y, y_pred, color='blue')
+plt.plot([min(y), max(y)], [min(y), max(y)], color='red')
 
-plt.title('Notas reales de PHP vs Predicción del modelo')
-plt.xlabel('Notas reales de PHP')
-plt.ylabel('Notas de PHP que predice el modelo')
+plt.title('Valor de mercado real vs Valor estimado')
+plt.xlabel('Valor de mercado')
+plt.ylabel('Valor de mercado predicho por el modelo')
 plt.legend()
 plt.grid(True)
 plt.show()
-
-"""
-STATS MODEL NO SE USA PERO CAPAZ LO USAMOS PARA VER SI NOS DA BIEN NUESTRO CODIGO?
-"""
-import statsmodels.api as sm
-
-x = sm.add_constant(x)
-
-model = sm.OLS(y, x).fit()
-summary = model.summary()
-
-rsquared = model.rsquared
-
-summary, rsquared
-
-
-"""
-descenso de gradiente supongo que lo haremos manual? --> lo hago en otro archivo
-"""
