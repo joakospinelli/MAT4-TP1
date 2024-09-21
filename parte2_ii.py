@@ -62,7 +62,7 @@ y = dataset['value_eur'].values.reshape(-1, 1)
 x = np.column_stack((np.ones(x.shape[0]), x))
 
 # Inicializar los coeficientes en 0
-theta = np.zeros((X.shape[1], 1))
+theta = np.zeros((x.shape[1], 1))
 
 # Parámetros del descenso por gradiente
 alpha = 0.01  # Tasa de aprendizaje
@@ -70,7 +70,7 @@ tol = 1e-9  # Tolerancia
 max_iters = 1000  # Máximo número de iteraciones
 
 # Ejecutar el descenso por gradiente
-theta_final, data = gradient_descent(X, y, theta, alpha, tol, max_iters)
+theta_final, data = gradient_descent(x, y, theta, alpha, tol, max_iters)
 
 # Crear el DataFrame para mostrar los resultados
 df = pd.DataFrame(data)
