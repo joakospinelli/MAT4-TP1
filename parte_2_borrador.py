@@ -9,7 +9,7 @@ dataset = pd.read_csv("players_21.csv")
 dataset = dataset.dropna(axis=1, how="any").select_dtypes(include=["number"])
 
 
-x = dataset['wage_eur','overall','potential','international_reputation']
+x = dataset[['wage_eur','overall','potential','international_reputation']].values
 y = dataset['value_eur']
 
 # Los resultados son (filas, columnas) (ojalá)
