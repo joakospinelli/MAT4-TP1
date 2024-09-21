@@ -55,8 +55,8 @@ inicio = time.process_time()
 dataset = pd.read_csv("players_21.csv")
 dataset = dataset.dropna(axis=1, how="any").select_dtypes(include=["number"])
 
-X = data['wage_eur', 'overall', 'potential', 'iternational_reputation']
-y = data['value_eur'].values.reshape(-1, 1)
+x = dataset[['wage_eur','overall','potential','international_reputation']].values
+y = dataset['value_eur'].values.reshape(-1, 1)
 
 # Agrego una columna de unos para el término independiente
 x = np.column_stack((np.ones(x.shape[0]), x))
