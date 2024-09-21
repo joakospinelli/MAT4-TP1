@@ -45,7 +45,13 @@ print(f"B4 (Reputación internacional): {beta[4]:.4f}")
 y_pred = np.dot(x, beta)
 
 # me falta coeficiente de determinación y la correlación
+ssr = np.sum((y - y_pred) ** 2)
+syy = np.sum((y - np.mean(y)) ** 2)
+r2 = 1 - (ssr / syy)
+r = (r2 ** 0.5)
 
+print("r2 - coeficiente de determinación", r2)
+print("r - coeficiente de correlación", r)
 # -----------------------------
 print("\nPrimeras filas del DataFrame:")
 print(dataset.head(10)) #muestro las primeras 10 lineas
