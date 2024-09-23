@@ -8,15 +8,10 @@ dataset = pd.read_csv("players_21.csv")
 
 dataset = dataset.dropna(axis=1, how="any").select_dtypes(include=["number"])
 
-
 x = dataset[['wage_eur','overall','potential','international_reputation']].values
 y = dataset['value_eur']
 
-# Los resultados son (filas, columnas) (ojalá)
-print(f"dimension de X: {x.shape}")
-print(f"dimension de Y: {y.shape}")
-
-# Agrego una columna de unos para el término independiente
+# agrego una columna de unos para el término independiente
 x = np.column_stack((np.ones(x.shape[0]), x))
 print(f"dimension de X: {x.shape}")
 
@@ -44,11 +39,10 @@ print(f"B4 (Reputación internacional): {beta[4]:.4f}")
 
 y_pred = np.dot(x, beta)
 
-# me falta coeficiente de determinación y la correlación
 ssr = np.sum((y - y_pred) ** 2)
 syy = np.sum((y - np.mean(y)) ** 2)
-r2 = 1 - (ssr / syy)
-r = (r2 ** 0.5)
+r2 = 1 - (ssr / syy) #r2
+r = (r2 ** 0.5)      #r
 
 print("r2 - coeficiente de determinación", r2)
 print("r - coeficiente de correlación", r)
@@ -56,7 +50,7 @@ print("r - coeficiente de correlación", r)
 print("\nPrimeras filas del DataFrame:")
 print(dataset.head(10)) #muestro las primeras 10 lineas
 
-""" ESTO NO ENTENDI Q HACE CREO Q GRAFICA :p"""
+# Gráfico
 plt.scatter(y, y_pred, color='blue')
 plt.plot([min(y), max(y)], [min(y), max(y)], color='red')
 
